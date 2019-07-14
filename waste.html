@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Plastic Waste Generation</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<style>
+	* {
+	  box-sizing: border-box;
+	}
+	/*Put padding around each div*/
+	div {
+	  padding-top: 5px;
+	  padding-right: 5px;
+	  padding-bottom: 5px;
+	  padding-left: 15px;
+	}
+	/*Set the font type*/
+	body,h1 {font-family: "Raleway", sans-serif}
+	body, html {height: 100%}
+
+	/* Style the header */
+	header {
+	  background-color: #005d87;
+	  padding: 30px;
+	  text-align: center;
+	  font-size: 35px;
+	  color: white;
+	}
+
+	/* Container for flexboxes */
+	section {
+	  display: -webkit-flex;
+	  display: flex;
+	}
+
+	/* Style the navigation menu */
+	nav {
+	  -webkit-flex: 1;
+	  -ms-flex: 1;
+	  flex: 1;
+	  background: #b8cadb;
+	  padding: 20px;
+	}
+
+	/* Style the article content */
+	article {
+	  -webkit-flex: 3;
+	  -ms-flex: 3;
+	  flex: 3;
+	  background-color: #FFFFFF;
+	  padding: 10px;
+	}
+
+	/* Style the footer */
+	footer {
+	  background-color: #005781;
+	  padding: 10px;
+	  text-align: center;
+	  color: white;
+	}
+
+	/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+	@media (max-width: 600px) {
+	  section {
+		-webkit-flex-direction: column;
+		flex-direction: column;
+	  }
+
+	</style>
+</head>
+
+<body>
+	<div>
+		<h1>Plastic Waste Generation</h1>
+		<h2>How does wealth relate to plastic waste generation?</h2>
+	</div>
+<header>
+		<a href="production.html">
+			<img onmouseover="bigImg(this)" onmouseout="normalImg(this)" src="images/factory.jpg" height="200" width="250" hspace="50px"></a>
+		<a href = "recycle.html">
+			<img onmouseover="bigImg(this)" onmouseout="normalImg(this)" src="images/recycling.jpg" height="200" width="250" hspace="50px"></a>
+			<a href = "manage.html">
+		<img onmouseover="bigImg(this)" onmouseout="normalImg(this)" src="images/ocean.jpg" height="200" width="250" hspace="50px"></a>
+		<a href = "https://ourworldindata.org/">
+			<img onmouseover="bigImg(this)" onmouseout="normalImg(this)" src="images/world.jpg" height="200" width="250" hspace="50px"></a>
+</header>
+	<section>
+		<nav>
+			<p>There is a clear correlation between economic development, measured as GDP per capita, and plastic waste generation.</p> 
+			<p>People in 'first-world' countries generate more kilograms of plastic per person than less developed countries.</p>
+			<p>Population size does seem a contributing factor.</p>
+		</nav>		  
+		<article id="series_chart_div" style="width: 900px; height: 650px;"></article>
+	</section>
+<footer>
+	  <p>Created by G00364775 with assistance from GMIT, W3schools.com, googleapis.com and ourworldindata.org</p>	
+</footer>
+</body>
+</html>
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawSeriesChart);
+
+function drawSeriesChart() {
+// Waste data in an array rendered courtesy of google apis
+      var data = google.visualization.arrayToDataTable([
+        ['ID', 'Per capita plastic waste kgs per person per day', 'GDP per capita', 'Region',     'Population'],
+        ['BGD',    0.034,              2442,      'Rest of Asia',  148692131],
+        ['BEL',    0.08,              41085,      'Western Europe',         10712066],
+        ['BRA',    0.165,               14537,      'South America',         194946470],
+        ['KHM',    0.066,              2522,      'Rest of Asia',    14138255],
+        ['CAN',    0.093,              40699,         'North America',         34016593],
+        ['CHL',    0.119,              19442,       'South America',    17113688],
+        ['CHN',    0.121,              9525,      'China',    1341335152],
+        ['COL',    0.144,              10900,      'South America',    46294841],
+        ['DNK',    0.047,               43998,      'Western Europe',         5550142],
+        ['FRA',    0.192,              36855,      'Western Europe',  62787427],
+		['DEU',    0.485,              40428,      'Western Europe',  82302465],
+		['IND',    0.01,              4404,      'Rest of Asia',  1224614327],
+		['IDN',    0.057,              8433,      'Rest of Asia',  239870937],
+		['IRL',    0.43,              44030,      'Europe',  4469900],
+		['NLD',    0.424,              45524,      'Europe',  16612988],
+		['NOR',    0.28,              62350,      'Europe',  4883111],
+		['PHL',    0.075,              5596,      'Rest of Asia',  93260798],
+		['POL',    0.097,              21770,      'Eastern Europe',  38276660],
+		['RUS',    0.112,              23107,      'Eastern Europe',  142958164],
+		['SAU',    0.156,              45421,      'Arabia',  27448086],
+		['ESP',    0.277,              32507,      'Western Europe',  46076989],
+		['LKA',    0.357,              8529,      'Rest of Asia',  20859949],
+		['GBR',    0.215,              36366,      'Western Europe',  62033570],
+		['USA',    0.335,              49374,      'North America',  310383948],
+		['VNM',    0.103,              4408,      'Rest of Asia',  87848445],
+      ]);
+
+      var options = {
+        title: 'Correlation between plastic waste kgs per person per pay, GDP per capita ' +
+               'and population of some world countries (2011)',
+        hAxis: {title: 'Per capita plastic waste, kilograms per person per day'},
+        vAxis: {title: 'GDP per capita PPP'},
+        bubble: {textStyle: {fontSize: 8}}
+      };
+
+      var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+      chart.draw(data, options);
+    }
+
+// function to increase picture sizes on hover
+function bigImg(x) {
+  x.style.height = "215px";
+  x.style.width = "265px";
+}
+
+function normalImg(x) {
+  x.style.height = "200px";
+  x.style.width = "250px";
+}
+
+</script>

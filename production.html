@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Plastic Production</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<style>
+	* {
+	  box-sizing: border-box;
+	}
+	/*Put padding around each div*/
+	div {
+	  padding-top: 5px;
+	  padding-right: 5px;
+	  padding-bottom: 5px;
+	  padding-left: 15px;
+	}
+
+	/*Set the font type*/
+	body,h1 {font-family: "Raleway", sans-serif}
+	body, html {height: 100%}
+
+	/* Style the header */
+	header {
+	  background-color: #005d87;
+	  padding: 30px;
+	  text-align: center;
+	  font-size: 35px;
+	  color: white;
+	}
+
+	/* Container for flexboxes */
+	section {
+	  display: -webkit-flex;
+	  display: flex;
+	}
+
+	/* Style the navigation menu */
+	nav {
+	  -webkit-flex: 1;
+	  -ms-flex: 1;
+	  flex: 1;
+	  background: #b8cadb;
+	  padding: 20px;
+	}
+
+	/* Style the article content */
+	article {
+	  -webkit-flex: 3;
+	  -ms-flex: 3;
+	  flex: 3;
+	  background-color: #FFFFFF;
+	  padding: 10px;
+	}
+
+	/* Style the footer */
+	footer {
+	  background-color: #005781;
+	  padding: 10px;
+	  text-align: center;
+	  color: white;
+	}
+
+	/* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+	@media (max-width: 600px) {
+	  section {
+		-webkit-flex-direction: column;
+		flex-direction: column;
+	  }
+	}
+
+	</style>
+</head>
+
+<body>
+<div>
+	<h1>Global plastic production</h1>
+	<h2>How much plastic does the world produce?</h2>
+</div>
+<header>
+	<a href = "waste.html">
+		<img onmouseover="bigImg(this)" onmouseout="normalImg(this)" src="images/waste.jpg" height="200" width="250" hspace="25px"></a>
+	<a href = "recycle.html">
+		<img onmouseover="bigImg(this)" onmouseout="normalImg(this)" src="images/recycling.jpg" height="200" width="250" hspace="25px"></a>
+		<a href = "manage.html">
+		<img onmouseover="bigImg(this)" onmouseout="normalImg(this)" src="images/ocean.jpg" height="200" width="250" hspace="25px"></a>
+	<a href = "https://ourworldindata.org/">
+		<img onmouseover="bigImg(this)" onmouseout="normalImg(this)" src="images/world.jpg" height="200" width="250" hspace="25px"></a>
+</header>
+	<section>
+		<nav>
+			<h3>Chart Formater</h3>
+			<h4>Select Bar Chart Size:</h4>
+		<select id="chartHeight">
+			<br><option value="300">300 Pixels</option></br>
+			<br><option value="500">500 Pixels</option></br>
+			<br><option value="700">700 Pixels</option></br>
+		</select>
+			<h4>Select Chart Colour:</h4>
+			<input type="color" id="colorPicker">
+			<br></br>
+			<br><button onclick="drawChart()">Draw Chart</button></br>
+			<br></br>
+			<p> In the chart above we see the evolution of annual global plastic production, measured in tonnes per year. This is shown from 1969 through to 2015..</p>
+			<p>In 1969 the world produced 35 million tonnes per year. Since then, annual production has increased more than 10-fold, reaching 381 million tonnes in 2015. For context, this is roughly equivalent to the mass of two-thirds of the world population.</p>
+			<p>The short downturn in annual production in 2009 and 2010 was predominantly the result of the 2008 global financial crisis — this dent is seen across several metrics of resource production/consumption.</p>	
+		</nav> 
+  		<article>
+			<h2>Global plastic production</h2>
+			<div id="myDiv"></div>
+		</article>
+	</section>
+<footer>
+	<p>Created by G00364775 with assistance from GMIT, W3schools.com, googleapis.com and ourworldindata.org</p>
+</footer>
+</body>
+</html>
+<script>
+
+
+function drawChart(){
+
+	//Plastic Production Data imported from a csv file
+
+	d3.csv("global-plastics-production.csv").then(function(data){
+		console.log(data);
+
+	//Values for bar chart
+	var height = document.getElementById("chartHeight").value;
+	var width = 900;
+	var dataCount = data.length;
+	var gap = 1;
+	var chartColor = document.getElementById("colorPicker").value;
+
+	//Convert to numbers
+	data.forEach(function(d){
+		d.tonnes = Number(d.tonnes);
+	})
+
+	//Create a scale for Y
+	var yScale = d3.scaleLinear()
+		.domain([0, d3.max(data, function(d){
+			return d.tonnes;
+		})])
+		.range([height, 0]);
+
+	//Create y Axis
+	var yAxis = d3.axisLeft()
+		.scale(yScale);
+
+	//Create scale for x Axis
+	var xScale = d3.scaleBand()
+		.domain(data.map(function(d){
+			return d.Year;
+			}))
+			.range([0, width]);
+
+	//Create scale for x Axis
+	var xAxis = d3.axisBottom()
+		.scale(xScale);
+
+	//Delete previous charts when changing chart size
+	d3.select("#myDiv").selectAll("*").remove();
+		
+	//Create an SVG Container
+	var svgContainer = d3.select("#myDiv").append("svg")
+		.attr("width", 1000)
+		.attr("height", 1000);
+		
+	//Create a rectangle
+	var myRectangle = svgContainer.selectAll("rect")
+		.data(data);
+		
+	//Add Attributes to rectangle
+	myRectangle.enter()
+		.append("rect")
+		.attr("x", function(d, i){
+			return (50 + (i*(width/dataCount)));
+		})
+		.attr("y", function(d){
+			return yScale(d.tonnes);
+		})
+		.attr("width", (width/dataCount - gap))
+		.attr("height", function(d){
+			return height - yScale(d.tonnes);
+		})
+		.attr("fill", chartColor);
+
+	svgContainer.append("g")
+			.attr("transform", "translate(50, 0)")
+			.call(yAxis);
+
+	svgContainer.append("g")
+			.attr("transform", "translate(50, " + height + ")")
+			.call(xAxis)
+			.selectAll("text")
+				.attr("transform", "rotate(60)")
+				.attr("text-anchor", "start")
+				.attr("x", 10)
+				.attr("y", 5)
+				.style("font-size", "12px");
+
+	});
+}
+
+// function to increase picture sizes on hover
+function bigImg(x) {
+  x.style.height = "215px";
+  x.style.width = "265px";
+}
+
+function normalImg(x) {
+  x.style.height = "200px";
+  x.style.width = "250px";
+}
+</script>

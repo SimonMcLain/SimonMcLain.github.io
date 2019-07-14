@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://d3js.org/d3.v5.min.js"
+	></script>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1 {font-family: "Raleway", sans-serif;
+		background-color: #b8cadb}
+body, html {height: 100%}
+
+/* Put in background image */
+.bgimg {
+  background-image: url('images/ocean.png');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Style all input fields */
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: #5c91ec;
+  color: white;
+}
+
+/* Style the container for inputs */
+.container {
+  background-color: #8a98ad;
+  padding: 20px;
+}
+
+</style>
+</head>
+<h1> Login to discover some facts about plastics </h1>
+<body>
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+	<div class="container">
+		<form action="production.html" method="get">
+				<label for="usrname">Username</label>
+				<input type="text" placeholder="username" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" required>
+			<div class="emailBox">
+				<label for="emailAddress">E-mail address</label><br>
+				<input id="emailAddress" type="email" size="64" maxLength="64" required
+				placeholder="username@GMIT.ie" name="" value=""
+				title="Please provide only a GMIT e-mail address">
+				<button type="submit" class="button--style-red">Enter Website</button>	
+			</div>	
+		</form>
+	</div>
+</div>
+<footer>
+	  <p>Created by G00364775 with assistance from GMIT, W3schools.com, googleapis.com and ourworldindata.org</p>	
+</footer>
+</body> 
+</html> 
